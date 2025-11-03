@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cute Terms & Conditions 💖</title>
+  <style>
+    :root {
+      --bg: #fff7fb;
+      --card: #ffffff;
+      --accent: #ff69b4;
+    }
+    body {
+      font-family: "Poppins", system-ui, sans-serif;
+      margin: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      width: 90%;
+      max-width: 520px;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(255, 105, 180, 0.2);
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #ff69b4;
+    }
+    p {
+      color: #555;
+    }
+    .link {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: transparent;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal {
+      background: var(--card);
+      width: 90%;
+      max-width: 700px;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: #ff69b4;
+    }
+    .modal .tc {
+      white-space: pre-wrap;
+      text-align: left;
+      color: #444;
+    }
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 14px;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .btn.secondary {
+      background: #ffe0ec;
+      color: var(--accent);
+    }
+    .btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .confetti span {
+      position: absolute;
+      display: block;
+      font-size: 20px;
+      animation: fall 2.6s linear;
+      opacity: 0.95;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="root">
+    <h1>Terms &amp; Conditions 💌</h1>
+    <p>Before you officially become my boyfriend, please review these totally serious terms 😜</p>
+    <a href="#" id="openTc" class="link">Read Terms &amp; Conditions</a>
+  </div>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tcTitle">
+      <h2 id="tcTitle">Pre-Boyfriend Trial Agreement 💞</h2>
+      <div class="tc" id="tcText">
+By clicking "I Accept," you agree to the following cute and unofficial Terms & Conditions 💞
+
+1. This is a *pre-boyfriend trial agreement* — not legally binding but emotionally powerful.  
+2. You agree to respond to messages with reasonable speed (bonus points for good morning and good night texts).  
+3. Random compliments are encouraged and highly appreciated.  
+4. Arguments must be followed by peace offerings — chocolate, memes, or hugs.  
+5. The “trial period” may be extended upon mutual consent and extra cuteness.  
+6. You must not disappear without notice — ghosting may result in emotional penalties.  
+7. Laughter, loyalty, and late-night conversations are essential parts of the package.  
+8. Once upgraded, you are entitled to unlimited affection and a lifetime supply of inside jokes.  
+
+If you accept these terms, your trial period will be *officially upgraded*. 💗
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" id="closeBtn">Close</button>
+        <button class="btn primary" id="acceptBtn">I Accept</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const open = document.getElementById('openTc');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('closeBtn');
+    const acceptBtn = document.getElementById('acceptBtn');
+    const root = document.getElementById('root');
+    const confettiWrap = document.getElementById('confetti');
+
+    open.addEventListener('click', (e)=>{ e.preventDefault(); modal.classList.add('show'); });
+    closeBtn.addEventListener('click', ()=> modal.classList.remove('show'));
+
+    acceptBtn.addEventListener('click', ()=>{
+      modal.classList.remove('show');
+      root.innerHTML = `
+        <div style="padding:20px;text-align:center">
+          <h1 style="color:#ff69b4;">🎉 Congratulations!</h1>
+          <p style="font-size:18px;">You have upgraded your trial period 💕</p>
+        </div>
+      `;
+
+      const emojis = ['🎉','✨','💖','💫','🎊','🥰'];
+      const count = 28;
+      for(let i=0;i<count;i++){
+        const s = document.createElement('span');
+        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.left = Math.random()*100 + '%';
+        s.style.top = '-10vh';
+        s.style.fontSize = (12 + Math.random()*28) + 'px';
+        s.style.animationDelay = (Math.random()*0.6) + 's';
+        confettiWrap.appendChild(s);
+      }
+      setTimeout(()=> confettiWrap.innerHTML = '', 3200);
+    });
+
+    modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('show'); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') modal.classList.remove('show'); });
+  </script>
+</body>
+</html>
