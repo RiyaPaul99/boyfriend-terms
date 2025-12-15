@@ -72,6 +72,7 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.25s;
+      z-index: 10;
     }
 
     .modal-backdrop.show {
@@ -92,14 +93,8 @@
     }
 
     @keyframes fadeIn {
-      from {
-        transform: scale(0.95);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
     .modal h2 {
@@ -152,6 +147,7 @@
       inset: 0;
       pointer-events: none;
       overflow: hidden;
+      z-index: 20;
     }
 
     .confetti span {
@@ -162,53 +158,43 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-      }
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
     }
   </style>
 </head>
 
 <body>
+
   <div class="container" id="root">
     <h1>Terms & Conditions 💌</h1>
     <p>
       Before I officially say <strong>YES</strong> to being your girlfriend,
       please read this very serious (and very cute) agreement 😜
     </p>
-
-    <!-- FIXED BUTTON -->
     <button id="openTc" class="link">Read Agreement</button>
   </div>
 
-  <!-- Modal -->
+  <!-- Agreement Modal -->
   <div class="modal-backdrop" id="modal">
-    <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal">
       <h2>Official Girlfriend Agreement 💍💖</h2>
-
       <div class="tc">
 By clicking "I Accept," you are officially asking me to be your girlfriend —  
-and by reading this, I am happily saying **YES** 💖
+and by reading this, I am happily saying <strong>YES</strong> 💖
 
-This agreement is not legally binding, but emotionally, mentally, and wholeheartedly meaningful.
+1. We agree to be exclusive partners — best friends, lovers, and teammates.  
+2. We promise respect, honesty, patience, and kindness — always.  
+3. Communication over ego. Love over pride.  
+4. Arguments end in understanding, not silence.  
+5. <strong>For better or for worse, for richer or for poorer</strong>.  
+6. We stay strong even when family influence challenges us.  
+7. We talk about marriage, children, and building a future together.  
+8. Loyalty, trust, and emotional safety are non-negotiable.  
+9. We support each other’s dreams and growth.  
+10. Love is shown through actions, not just words.
 
-1. From this moment on, we agree to be exclusive partners — best friends, lovers, and teammates in life.  
-2. We promise to treat each other with respect, honesty, patience, and kindness — even on difficult days.  
-3. We agree to communicate openly, listen without judgment, and never let ego win over love.  
-4. Arguments are allowed, but disrespect is not. Every disagreement must end in understanding and growth.  
-5. We promise to stand by each other **for better or for worse, for richer or for poorer**, through happiness, stress, success, and struggle.  
-6. We acknowledge that family and parental influence may affect our journey, and we commit to staying strong together through it.  
-7. We agree to build a future together — including discussions about marriage at the right time, creating a loving home, and raising children with shared values and love.  
-8. Loyalty, trust, emotional safety, and effort are non-negotiable and must be practiced daily.  
-9. We promise to support each other’s dreams, celebrate victories together, and hold hands through failures.  
-10. Love will be shown not just through words, but through actions, consistency, and presence.
-
-By clicking **"I Accept"**, you agree to enter this relationship with genuine intentions, long-term commitment, and a full heart 💗
-
-This agreement begins today and has no expiry date.
+This agreement starts today and has no expiry 💗
       </div>
 
       <div class="actions">
@@ -218,40 +204,39 @@ This agreement begins today and has no expiry date.
     </div>
   </div>
 
+  <!-- Success Popup -->
+  <div class="modal-backdrop" id="successModal">
+    <div class="modal" style="text-align:center;">
+      <h2 style="font-size:26px;">💍 It’s Official!</h2>
+      <p style="font-size:18px;">
+        Ummm <strong>YES Richieeee</strong> 💖<br><br>
+        You’re officially my <strong>boyfriend</strong> now 🥰
+      </p>
+      <p style="color:#666;">
+        Here’s to love, trust, respect,  
+        and choosing each other — always ✨
+      </p>
+      <button class="btn primary" id="successClose">Forever Starts Now 💕</button>
+    </div>
+  </div>
+
   <div class="confetti" id="confetti"></div>
 
   <script>
     const openBtn = document.getElementById("openTc");
     const modal = document.getElementById("modal");
+    const successModal = document.getElementById("successModal");
     const closeBtn = document.getElementById("closeBtn");
     const acceptBtn = document.getElementById("acceptBtn");
-    const root = document.getElementById("root");
+    const successClose = document.getElementById("successClose");
     const confettiWrap = document.getElementById("confetti");
 
-    openBtn.addEventListener("click", () => {
-      modal.classList.add("show");
-    });
+    openBtn.onclick = () => modal.classList.add("show");
+    closeBtn.onclick = () => modal.classList.remove("show");
 
-    closeBtn.addEventListener("click", () => {
+    acceptBtn.onclick = () => {
       modal.classList.remove("show");
-    });
-
-    acceptBtn.addEventListener("click", () => {
-      modal.classList.remove("show");
-
-      root.innerHTML = `
-        <div style="padding:20px;text-align:center">
-          <h1 style="color:#ff3366;">💖 It's Official!</h1>
-          <p style="font-size:18px;">
-            I said <strong>YES</strong> 💕<br>
-            You’re officially my boyfriend now 🥰
-          </p>
-          <p style="font-size:16px;color:#666;">
-            Here’s to love, respect, a strong future,  
-            and choosing each other — always 💍✨
-          </p>
-        </div>
-      `;
+      successModal.classList.add("show");
 
       const emojis = ["❤️","💖","💍","✨","🥰","🎉"];
       for (let i = 0; i < 30; i++) {
@@ -265,15 +250,19 @@ This agreement begins today and has no expiry date.
       }
 
       setTimeout(() => confettiWrap.innerHTML = "", 3200);
-    });
+    };
 
-    modal.addEventListener("click", e => {
-      if (e.target === modal) modal.classList.remove("show");
-    });
+    successClose.onclick = () => {
+      successModal.classList.remove("show");
+    };
 
     document.addEventListener("keydown", e => {
-      if (e.key === "Escape") modal.classList.remove("show");
+      if (e.key === "Escape") {
+        modal.classList.remove("show");
+        successModal.classList.remove("show");
+      }
     });
   </script>
+
 </body>
 </html>
