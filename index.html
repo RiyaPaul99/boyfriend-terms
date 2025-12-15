@@ -19,14 +19,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-
-      /* ❤️ RED BACKGROUND */
-      background: linear-gradient(
-        135deg,
-        #ff4d6d,
-        #ff758f,
-        #ff8fa3
-      );
+      background: linear-gradient(135deg, #ff4d6d, #ff758f, #ff8fa3);
     }
 
     .container {
@@ -59,9 +52,8 @@
       border: 2px solid var(--accent);
       color: var(--accent);
       cursor: pointer;
-      text-decoration: none;
-      transition: 0.25s;
       font-weight: 500;
+      transition: 0.25s;
     }
 
     .link:hover {
@@ -78,13 +70,13 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
       transition: opacity 0.25s;
     }
 
     .modal-backdrop.show {
       opacity: 1;
-      pointer-events: auto;
+      visibility: visible;
     }
 
     .modal {
@@ -187,7 +179,9 @@
       Before I officially say <strong>YES</strong> to being your girlfriend,
       please read this very serious (and very cute) agreement 😜
     </p>
-    <a href="#" id="openTc" class="link">Read Agreement</a>
+
+    <!-- FIXED BUTTON -->
+    <button id="openTc" class="link">Read Agreement</button>
   </div>
 
   <!-- Modal -->
@@ -209,4 +203,77 @@ This agreement is not legally binding, but emotionally, mentally, and wholeheart
 6. We acknowledge that family and parental influence may affect our journey, and we commit to staying strong together through it.  
 7. We agree to build a future together — including discussions about marriage at the right time, creating a loving home, and raising children with shared values and love.  
 8. Loyalty, trust, emotional safety, and effort are non-negotiable and must be practiced daily.  
-9. We promi
+9. We promise to support each other’s dreams, celebrate victories together, and hold hands through failures.  
+10. Love will be shown not just through words, but through actions, consistency, and presence.
+
+By clicking **"I Accept"**, you agree to enter this relationship with genuine intentions, long-term commitment, and a full heart 💗
+
+This agreement begins today and has no expiry date.
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" id="closeBtn">Close</button>
+        <button class="btn primary" id="acceptBtn">I Accept 💖</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const openBtn = document.getElementById("openTc");
+    const modal = document.getElementById("modal");
+    const closeBtn = document.getElementById("closeBtn");
+    const acceptBtn = document.getElementById("acceptBtn");
+    const root = document.getElementById("root");
+    const confettiWrap = document.getElementById("confetti");
+
+    openBtn.addEventListener("click", () => {
+      modal.classList.add("show");
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("show");
+    });
+
+    acceptBtn.addEventListener("click", () => {
+      modal.classList.remove("show");
+
+      root.innerHTML = `
+        <div style="padding:20px;text-align:center">
+          <h1 style="color:#ff3366;">💖 It's Official!</h1>
+          <p style="font-size:18px;">
+            I said <strong>YES</strong> 💕<br>
+            You’re officially my boyfriend now 🥰
+          </p>
+          <p style="font-size:16px;color:#666;">
+            Here’s to love, respect, a strong future,  
+            and choosing each other — always 💍✨
+          </p>
+        </div>
+      `;
+
+      const emojis = ["❤️","💖","💍","✨","🥰","🎉"];
+      for (let i = 0; i < 30; i++) {
+        const span = document.createElement("span");
+        span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        span.style.left = Math.random() * 100 + "%";
+        span.style.top = "-10vh";
+        span.style.fontSize = 14 + Math.random() * 26 + "px";
+        span.style.animationDelay = Math.random() * 0.6 + "s";
+        confettiWrap.appendChild(span);
+      }
+
+      setTimeout(() => confettiWrap.innerHTML = "", 3200);
+    });
+
+    modal.addEventListener("click", e => {
+      if (e.target === modal) modal.classList.remove("show");
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") modal.classList.remove("show");
+    });
+  </script>
+</body>
+</html>
